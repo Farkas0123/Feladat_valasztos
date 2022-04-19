@@ -1,0 +1,1 @@
+web: gunicorn Feladat_valaszt.wsgi --log-file -

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'APP',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Feladat_valaszt.urls'
@@ -121,3 +123,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+# INNEN szedegeti össze azokat a statikus fájlokat, amelyek nem tartoznak egyetlen apphoz sem:
+STATICFILES_DIRS = [
+    BASE_DIR/'static'
+]
+
+# IDE fogja collectelni a collectstatic
+STATIC_ROOT = BASE_DIR / 'staticfiles'  
+#régebbi django-hoz: 
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# ITT fogja észlelni a böngésző
+STATIC_URL = '/static/'
