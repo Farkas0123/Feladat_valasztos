@@ -1,12 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %} ">
     <title>Feladat választás</title>
 </head>
 <body>
-    Jes Jes
+    <header>Feladatok</header>
+    <main>
+        {% for feladat in feladatok %}
+            <form method="POST">
+                {% csrf_token %}
+                <div>{{feladat.feladat}}</div>
+                <input type="hidden" name="felnev" value="{{feladat.feladat}}">
+                {% if feladat.kie == "-" %}
+                    <div>{{feladat.kiesz}}</div>
+                    <button type="submit">Jelentkezem!</button>
+                {% else %}
+                    <div>{{feladat.kiesz}}</div>
+                {% endif %}
+            </form>
+        {% endfor %}
+    </main>
+    <footer>by me</footer>
 </body>
 </html>

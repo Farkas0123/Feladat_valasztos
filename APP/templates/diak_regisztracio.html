@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %} ">
+    <script src="{% static 'script.js' %}"></script>
+
+    <title>Új diákok regisztrációja</title>
+</head>
+<body>
+    <div id="container">
+        <header>Új diak(ok) regisztrációja</header>
+        <main>
+            <form method="POST">
+                {% csrf_token %}
+                <div id="hibas">{{hiba}}</div>
+                <div>Ide írja be a diákok nevét és jelszavát:</div>
+                <textarea name="adatok" id="cella" cols="30" rows="10" placeholder="Füty Imre,jelszo123"></textarea>
+                <br>
+                <button type="submit">Regisztráció</button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

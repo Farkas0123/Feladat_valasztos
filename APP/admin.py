@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Diak
+from .models import Feladat
+
+admin.site.register(Diak)
+admin.site.register(Feladat)
