@@ -13,30 +13,26 @@ def index(request):
         if d != None and d.jelszo == djelszo:
             global felhasz
             felhasz = dnev
-            return redirect('/valasztas/')
+            return valasztas(request)
         else:
             context={'hiba':"Hibás felhasználó név vagy jelszó!"}
     return render(request, template, context)
 
 def valasztas(request):
     template = "valasztas.html"
-    i = 0
-    while i < len(list(Feladat.objects.all())):
-        if list(Feladat.objects.all())[i].kie == "-":
-            list(Feladat.objects.all())[i].kiesz = "Ez a feladat még szabad."
+    for diak in list(Feladat.objects.all()):
+        if diak.kie == "-":
+            diak.kiesz = "Ez a feladat még szabad."
         else:
-            list(Feladat.objects.all())[i].kiesz = "Ez a feladat már foglalt"
-        i += 1
+            diak.kiesz = "Ez a feladat már foglalt"
     
-    context = {'feladatok' : Feladat.objects.all}
-            
-    print(list(Feladat.objects.all())[0].kiesz)
     
     if request.method == "POST":
         f = Feladat.objects.filter(feladat = "felnev").first()
         if f != None:
             f.kie = felhasz
         
+    context = {'feladatok' : Feladat.objects.all}
             
     return render(request,template,context)
 
@@ -46,15 +42,13 @@ def regisztracio(request):
         tabla = request.POST['adatok'].split("\t")
         for diak in tabla:
             akt = diak.split(",")
-            print(akt[0] == "")
-            print(akt[1] != None)
-            print(akt)
-            if akt[0] == "" or akt[1] == None:
-                return render(request, template, {'hiba': "Az egyik adat hibás!"})
-            # print(akt[0]+akt[1])
-            
+            try:
+                a = str(akt[0])
+                b = akt[1]
+            except:
+                return render(request, template, {'hiba': "Valamelyik adat hibás"})
+
             if Diak.objects.filter(nev=akt[0]).first() == None:
-                print("itt vok")
                 Diak.objects.create(nev=akt[0],jelszo=akt[1])
     
     return render(request,template,{})
