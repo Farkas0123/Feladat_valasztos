@@ -1,23 +1,14 @@
-from django.shortcuts import redirect
 from django.shortcuts import render
 from .models import Diak, Feladat
+from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.models import User
 
-felhasz = ""
+@login_required
 def index(request):
-    template = "login.html"
-    context = {}
-    if request.method == "POST":
-        dnev = request.POST['nev']
-        djelszo = request.POST['jelszo']
-        d = Diak.objects.filter(nev = dnev).first()
-        if d != None and d.jelszo == djelszo:
-            global felhasz
-            felhasz = dnev
-            return valasztas(request)
-        else:
-            context={'hiba':"Hibás felhasználó név vagy jelszó!"}
-    return render(request, template, context)
+    template = "registration/login.html"
+    return render(request, template, {})
 
+@login_required
 def valasztas(request):
     template = "valasztas.html"
     for diak in list(Feladat.objects.all()):
@@ -27,14 +18,8 @@ def valasztas(request):
             diak.kiesz = "Ez a feladat már foglalt"
     
     
-    if request.method == "POST":
-        f = Feladat.objects.filter(feladat = "felnev").first()
-        if f != None:
-            f.kie = felhasz
-        
-    context = {'feladatok' : Feladat.objects.all}
             
-    return render(request,template,context)
+    return render(request,template,{})
 
 def regisztracio(request):
     template = "diak_regisztracio.html"
@@ -48,7 +33,8 @@ def regisztracio(request):
             except:
                 return render(request, template, {'hiba': "Valamelyik adat hibás"})
 
-            if Diak.objects.filter(nev=akt[0]).first() == None:
-                Diak.objects.create(nev=akt[0],jelszo=akt[1])
+            if User.objects.filter(nev=akt[0]).first() == None:
+                User.objects.create(nev=akt[0],jelszo=akt[1])
     
     return render(request,template,{})
+

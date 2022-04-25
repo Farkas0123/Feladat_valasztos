@@ -136,3 +136,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # ITT fogja észlelni a böngésző
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/login/'
+
+LOGIN_REDIRECT_URL = '/valasztas/'
+LOGOUT_REDIRECT_URL = '/'
