@@ -16,7 +16,7 @@
                 {% csrf_token %}
                 <div>{{feladat.feladat}}</div>
                 <input type="hidden" name="felnev" value="{{feladat.feladat}}">
-                {% if feladat.kie == "-" %}
+                {% if feladat.kie == None %}
                     <div>{{feladat.kiesz}}</div>
                     <button type="submit">Jelentkezem!</button>
                 {% else %}

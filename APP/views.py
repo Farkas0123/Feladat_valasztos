@@ -1,5 +1,6 @@
+from multiprocessing import context
 from django.shortcuts import render
-from .models import Diak, Feladat
+from .models import Feladat
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth.models import User
 
@@ -11,15 +12,27 @@ def index(request):
 @login_required
 def valasztas(request):
     template = "valasztas.html"
+    
     for diak in list(Feladat.objects.all()):
-        if diak.kie == "-":
+        if diak.kie == None:
             diak.kiesz = "Ez a feladat még szabad."
         else:
             diak.kiesz = "Ez a feladat már foglalt"
     
-    
-            
-    return render(request,template,{})
+    context = {'feladatok' : Feladat.objects.all()}
+    if request.method == "POST":
+        Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=request.user.username) 
+        print(Feladat.objects.filter(feladat = request.POST['felnev']).first().kie)
+        print(request.user.username)
+        print(Feladat.objects.filter(feladat = request.POST['felnev']).first().kie)
+        
+        for diak in list(Feladat.objects.all()):
+            if diak.kie == None:
+                diak.kiesz = "Ez a feladat még szabad."
+            else:
+                diak.kiesz = "Ez a feladat már foglalt"
+        context = {'feladatok' : Feladat.objects.all()}    
+    return render(request,template,context)
 
 def regisztracio(request):
     template = "diak_regisztracio.html"
