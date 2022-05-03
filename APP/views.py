@@ -15,23 +15,34 @@ def valasztas(request):
     
     for diak in list(Feladat.objects.all()):
         if diak.kie == None:
-            diak.kiesz = "Ez a feladat még szabad."
+            diak.kiesz="Ez a feladat még szabad."
+            diak.save()
         else:
-            diak.kiesz = "Ez a feladat már foglalt"
+            diak.kiesz="Ez a feladat már foglalt"
+            if diak.kie == request.user.username:
+                diak.egyezzik = True
+            diak.save()  
+    context = {'feladatok' : Feladat.objects.all()}    
     
-    context = {'feladatok' : Feladat.objects.all()}
     if request.method == "POST":
-        Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=request.user.username) 
-        print(Feladat.objects.filter(feladat = request.POST['felnev']).first().kie)
-        print(request.user.username)
-        print(Feladat.objects.filter(feladat = request.POST['felnev']).first().kie)
-        
+        print(request.POST['le'])
+        if request.POST['le'] == "le":
+            Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=None)
+        else:
+            Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=request.user.username) 
+            
         for diak in list(Feladat.objects.all()):
             if diak.kie == None:
-                diak.kiesz = "Ez a feladat még szabad."
+                diak.kiesz="Ez a feladat még szabad."
+                diak.save()
             else:
-                diak.kiesz = "Ez a feladat már foglalt"
-        context = {'feladatok' : Feladat.objects.all()}    
+                diak.kiesz="Ez a feladat már foglalt."
+                diak.save()
+        
+        joe = bool(Feladat.objects.filter(feladat = request.POST['felnev']).first().kie == request.user.username)
+        print(joe)
+        context = {'feladatok' : Feladat.objects.all(), 'kie': joe}    
+        
     return render(request,template,context)
 
 def regisztracio(request):

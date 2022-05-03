@@ -1,0 +1,22 @@
+<!-- {% if {{kie}} == True %}
+    {% if feladat.kie == None %}
+        <div>{{feladat.kiesz}}</div>
+        <input type="hidden" name="le" value="fel">
+
+        <button type="submit">Jelentkezem!</button>
+    {% else %}
+        <div>{{feladat.kiesz}}</div>
+        <input type="hidden" name="le" value="le">
+
+        <button type="submit">Lejelentkezem!</button>
+    {% endif %}
+{% else %}
+    {% if feladat.kie == None %}
+        <div>{{feladat.kiesz}}</div>
+        <input type="hidden" name="le" value="fel">
+
+        <button type="submit">Jelentkezem!</button>
+    {% else %}
+        <div>{{feladat.kiesz}}</div>
+    {% endif %}
+{% endif %} -->

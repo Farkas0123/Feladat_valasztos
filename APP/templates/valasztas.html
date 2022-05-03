@@ -16,12 +16,22 @@
                 {% csrf_token %}
                 <div>{{feladat.feladat}}</div>
                 <input type="hidden" name="felnev" value="{{feladat.feladat}}">
+                
                 {% if feladat.kie == None %}
                     <div>{{feladat.kiesz}}</div>
+                    <input type="hidden" name="le" value="fel">
+
                     <button type="submit">Jelentkezem!</button>
-                {% else %}
+                {% elif feladat.egyezzik %}
                     <div>{{feladat.kiesz}}</div>
-                    <button type="reset">Lejelentkezem!</button>
+                    <input type="hidden" name="le" value="le">
+
+                    <button type="submit">Lejelentkezem!</button>
+                {% else %}
+                    <div>{{user}}</div>
+                    <div>{{feladat.kie}}</div>
+                     
+                    <div>{{feladat.kiesz}}</div>
                 {% endif %}
             </form>
         {% endfor %}
