@@ -21,15 +21,28 @@ def valasztas(request):
             diak.kiesz="Ez a feladat már foglalt"
             if diak.kie == request.user.username:
                 diak.egyezzik = True
+                diak.save()  
+            else:
+                diak.egyezzik = False
+                diak.save()  
             diak.save()  
     context = {'feladatok' : Feladat.objects.all()}    
     
     if request.method == "POST":
-        print(request.POST['le'])
+        print(request.user.first_name)
         if request.POST['le'] == "le":
             Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=None)
+            Feladat.objects.filter(feladat = request.POST['felnev']).update(kiesz=None)
+            request.user.first_name = None
+        elif request.user.first_name != None and request.POST['le'] == "fel":
+            Feladat.objects.filter(feladat = request.user.first_name).update(kie=None) 
+            Feladat.objects.filter(feladat = request.user.first_name).update(kiesz=None) 
+            Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=request.user.username) 
+            request.user.first_name = request.POST['felnev']
         else:
             Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=request.user.username) 
+            request.user.first_name = request.POST['felnev']
+
             
         for diak in list(Feladat.objects.all()):
             if diak.kie == None:
@@ -37,11 +50,15 @@ def valasztas(request):
                 diak.save()
             else:
                 diak.kiesz="Ez a feladat már foglalt."
-                diak.save()
+                if diak.kie == request.user.username:
+                    diak.egyezzik = True
+                    diak.save()  
+                else:
+                    diak.egyezzik = False
+                    diak.save()  
+                diak.save()  
         
-        joe = bool(Feladat.objects.filter(feladat = request.POST['felnev']).first().kie == request.user.username)
-        print(joe)
-        context = {'feladatok' : Feladat.objects.all(), 'kie': joe}    
+        context = {'feladatok' : Feladat.objects.all()}    
         
     return render(request,template,context)
 

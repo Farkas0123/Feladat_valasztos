@@ -10,6 +10,7 @@
 </head>
 <body>
     <header>Feladatok</header>
+    <p>{{user}}</p>
     <main>
         {% for feladat in feladatok %}
             <form method="POST">
@@ -28,9 +29,6 @@
 
                     <button type="submit">Lejelentkezem!</button>
                 {% else %}
-                    <div>{{user}}</div>
-                    <div>{{feladat.kie}}</div>
-                     
                     <div>{{feladat.kiesz}}</div>
                 {% endif %}
             </form>
