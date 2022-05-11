@@ -11,7 +11,6 @@
 <body>
     <header>Feladatok</header>
     <p>{{user}}</p>
-    <p>{{user.first_name}}</p>
     <main>
         {% for feladat in feladatok %}
             <form method="POST">
@@ -24,8 +23,7 @@
                     <input type="hidden" name="le" value="fel">
 
                     <button type="submit">Jelentkezem!</button>
-                {% elif feladat.egyezzik %}
-                    <div>{{feladat.kiesz}}</div>
+                {% elif feladat.kie == user.username %}
                     <input type="hidden" name="le" value="le">
 
                     <button type="submit">Lejelentkezem!</button>

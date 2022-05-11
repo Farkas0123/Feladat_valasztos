@@ -16,16 +16,9 @@ def valasztas(request):
     for diak in list(Feladat.objects.all()):
         if diak.kie == None:
             diak.kiesz="Ez a feladat még szabad."
-            diak.egyezzik = False
             diak.save()
         else:
             diak.kiesz="Ez a feladat már foglalt"
-            if diak.kie == request.user.username:
-                diak.egyezzik = True
-                diak.save()  
-            else:
-                diak.egyezzik = False
-                diak.save()  
             diak.save()  
     context = {'feladatok' : Feladat.objects.all()}    
     
@@ -33,31 +26,20 @@ def valasztas(request):
         
         if request.POST['le'] == "le":
             Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=None)
-            request.user.first_name=None
             print(f"lejelentkezésnél {request.user.first_name} {request.user}")
-        elif request.user.first_name == None and request.POST['le'] == "fel":
-            Feladat.objects.filter(feladat = request.user.first_name).update(kie=None) 
-            Feladat.objects.filter(feladat = request.user.first_name).update(egyezzik=False)
+        elif Feladat.objects.filter(kie=request.user.username).first() != None and request.POST['le'] == "fel":
+            Feladat.objects.filter(kie=request.user.username).update(kie=None) 
             Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=request.user.username) 
-            request.user.first_name=request.POST['felnev']
-            print(f"átjelentkezésnél {request.user.first_name} {request.user}")
         else:
             Feladat.objects.filter(feladat = request.POST['felnev']).update(kie=request.user.username) 
-            request.user.first_name=request.POST['felnev']
-            print(f"fel jelentkezésnél{request.user.first_name} {request.user}")
 
             
         for diak in list(Feladat.objects.all()):
             if diak.kie == None:
                 diak.kiesz="Ez a feladat még szabad."
-                diak.egyezzik = False
                 diak.save()
             else:
                 diak.kiesz="Ez a feladat már foglalt."
-                if diak.kie == request.user.username:
-                    diak.egyezzik = True
-                else:
-                    diak.egyezzik = False
                 diak.save()  
         
         context = {'feladatok' : Feladat.objects.all()}      
