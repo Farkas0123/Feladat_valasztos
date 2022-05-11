@@ -9,36 +9,46 @@
     <title>Bejelentkezés</title>
 </head>
 <body>
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
-    {% if next %}
-        {% if user.is_authenticated %}
-        <p>Your account doesn't have access to this page. To proceed,
-        please login with an account that has access.</p>
-        {% else %}
-        <p>Please login to see this page.</p>
-        {% endif %}
-    {% endif %}
-
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <table>
-        <tr>
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-        </tr>
-        </table>
-        <input type="submit" value="login" />
-        <input type="hidden" name="next" value="{{ next }}" />
-    </form>
-
-    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+    <div class="container">
+        <header class="grid-item">
+            <h1>Feladat választós applikáció</h1>
+        </header>
+        <main class="grid-item">
+            {% if form.errors %}
+                <p class="error">A felhasználó név vagy a jelszó nem megfelelő. Próbáld újra!</p>
+            {% endif %}
+    
+            {% if next %}
+                {% if user.is_authenticated %}
+                <p class="error">A fiókod nincs regisztrálva az oldalon.</p>
+                {% else %}
+                <p>Jelentkezz be, hogy lásd az oldalt!</p>
+                {% endif %}
+            {% endif %}
+    
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <table class="login">
+                <tr>
+                    <td>Felhasználónév: </td>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td>Jelszó: </td>
+                    <td>{{ form.password }}</td>
+                </tr>
+                </table>
+                <input type="submit" value="login" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+            <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+        </main>
+        <footer class="grid-item">
+            Készítette: Sakraf Sökü
+        </footer>
+    </div>
+    
+    
 
 </body>
 </html>
