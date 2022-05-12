@@ -6,20 +6,73 @@
 
 .container {
     display: grid;
-    grid-template-rows: fit-content(auto 80% auto);
-    background-color: #2196F3;
-    padding: 10px;
+    grid-template-rows: fit-content()14% 80% 4%;
+    background-color: #6D8B74;
     height: 100vh;
 }
 
+header{
+    align-self: start;
+    font-size: larger;
+    background-color: #EFEAD8;
+}
+
+footer{
+    align-self: end;
+    background-color: #D0C9C0;
+    color: black;
+    font-size: medium;
+}
+
 .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    font-size: 150%;
     text-align: center;
 }
 
-.login {
+.doboz{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 2%;
+    background-color: #EFEAD8;
+    border: 5px solid black;
+    border-radius: 0.5cm;
+    font-size: 150%;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+}
+
+.login{
     margin-left: auto;
     margin-right: auto;
-  }
+}
+
+.error{
+    color: red;
+}
+
+#feladatok{
+    justify-self:center;
+}
+
+.gomb {
+    padding: 2% 3%;
+    font-size: 70%;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #04AA6D;
+    border: none;
+    border-radius:1em;
+}
+  
+.gomb:hover {
+    transition: 0.5s;
+    background-color: #3e8e41
+}
+  
+.gomb:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}

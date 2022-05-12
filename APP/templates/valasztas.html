@@ -9,30 +9,33 @@
     <title>Feladat választás</title>
 </head>
 <body>
-    <header>Feladatok</header>
-    <p>{{user}}</p>
-    <main>
-        {% for feladat in feladatok %}
-            <form method="POST">
-                {% csrf_token %}
-                <div>{{feladat.feladat}}</div>
-                <input type="hidden" name="felnev" value="{{feladat.feladat}}">
-                
-                {% if feladat.kie == None %}
-                    <div>{{feladat.kiesz}}</div>
-                    <input type="hidden" name="le" value="fel">
+    <div class="container">
+        <header class="grid-item">
+            <h1>Feladatok</h1>
+        </header>
+        <main id="feladatok">
+            {% for feladat in feladatok %}
+                <form class="doboz" method="POST">
+                    {% csrf_token %}
+                    <div>{{feladat.feladat}}</div>
+                    <input type="hidden" name="felnev" value="{{feladat.feladat}}">
+                    
+                    {% if feladat.kie == None %}
+                        <div>{{feladat.kiesz}}</div>
+                        <input type="hidden" name="le" value="fel">
 
-                    <button type="submit">Jelentkezem!</button>
-                {% elif feladat.kie == user.username %}
-                    <input type="hidden" name="le" value="le">
+                        <button class="gomb" type="submit">Jelentkezem!</button>
+                    {% elif feladat.kie == user.username %}
+                        <input type="hidden" name="le" value="le">
 
-                    <button type="submit">Lejelentkezem!</button>
-                {% else %}
-                    <div>{{feladat.kiesz}}</div>
-                {% endif %}
-            </form>
-        {% endfor %}
-    </main>
-    <footer>by me</footer>
+                        <button class="gomb" type="submit">Lejelentkezem!</button>
+                    {% else %}
+                        <div>{{feladat.kiesz}}</div>
+                    {% endif %}
+                </form>
+            {% endfor %}
+        </main>
+        <footer class="grid-item">Készítette: Sakraf Sökü</footer>
+    </div>
 </body>
 </html>

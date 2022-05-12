@@ -18,7 +18,7 @@ def valasztas(request):
             diak.kiesz="Ez a feladat még szabad."
             diak.save()
         else:
-            diak.kiesz="Ez a feladat már foglalt"
+            diak.kiesz="Ez a feladat már foglalt!"
             diak.save()  
     context = {'feladatok' : Feladat.objects.all()}    
     
@@ -57,8 +57,8 @@ def regisztracio(request):
             except:
                 return render(request, template, {'hiba': "Valamelyik adat hibás"})
 
-            if User.objects.filter(nev=akt[0]).first() == None:
-                User.objects.create(nev=akt[0],jelszo=akt[1])
+            if User.objects.filter(username=akt[0]).first() == None:
+                User.objects.create(username=akt[0],password=akt[1])
     
     return render(request,template,{})
 

@@ -12,17 +12,19 @@
     <title>Új diákok regisztrációja</title>
 </head>
 <body>
-    <header>Új diak(ok) regisztrációja</header>
-    <main>
-        <form method="POST">
-            {% csrf_token %}
-            <div>Ide írja be a diákok nevét és jelszavát:</div>
-            <div id="hibas">{{hiba}}</div>
-            <textarea name="adatok" id="cella" cols="30" rows="10" placeholder="Füty Imre,jelszo123"></textarea>
-            <br>
-            <button type="submit">Regisztráció</button>
-        </form>
-    </main>
-    <footer>by me</footer>   
+    <div class="container">
+        <header class="grid-item"><h1>Új diak(ok) regisztrációja</h1></header>
+        <main class="doboz">
+            <form  method="POST">
+                {% csrf_token %}
+                <div>Ide írja be a diákok nevét és jelszavát:</div>
+                <div class="error">{{hiba}}</div>
+                <textarea name="adatok" id="cella" cols="30" rows="10" placeholder="Füty Imre,jelszo123"></textarea>
+                <br>
+                <button class="gomb" type="submit">Regisztráció</button>
+            </form>
+        </main>
+        <footer class="grid-item">Készítette: Sakraf Sökü</footer>   
+    </div>
 </body>
 </html>

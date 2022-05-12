@@ -13,7 +13,7 @@
         <header class="grid-item">
             <h1>Feladat választós applikáció</h1>
         </header>
-        <main class="grid-item">
+        <main class="doboz">
             {% if form.errors %}
                 <p class="error">A felhasználó név vagy a jelszó nem megfelelő. Próbáld újra!</p>
             {% endif %}
@@ -38,7 +38,7 @@
                     <td>{{ form.password }}</td>
                 </tr>
                 </table>
-                <input type="submit" value="login" />
+                <input class="gomb" type="submit" value="login" />
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
             <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
